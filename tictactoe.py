@@ -152,8 +152,8 @@ def play_game():
 
         game.switch_player()
 
-
-play_game()
+if __name__ == "__main__":
+    play_game()
 
 
 
