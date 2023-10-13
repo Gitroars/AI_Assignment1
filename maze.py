@@ -30,39 +30,35 @@ graph = {
 from collections import deque
 
 def bfs(graph, start, goal):
-    # Initialize the queue and set to keep track of visited nodes
+    
     queue = deque()
     visited = set()
 
-    # Initialize the queue with the start node
     queue.append((start, [start]))
 
     while queue:
         node, path = queue.popleft()
 
         if node == goal:
-            # If we reach the goal, return the path
             return path
 
         if node not in visited:
             visited.add(node)
             for neighbor in graph.get(node, []):
                 if neighbor not in visited:
-                    # Enqueue the neighbor and update the path
                     new_path = path + [neighbor]
                     queue.append((neighbor, new_path))
 
-    # If no path is found
     return None
 
 
 
-# Set the start and end nodes
+
 start = 'A1'
 goal = 'C2'
-path = bfs(graph, start, goal) # Call the bfs function
+path = bfs(graph, start, goal) 
 
 if path:
-    print("Path from", start, "to", goal, ":", " -> ".join(path))
+    print(f"Path from {start} to {goal} : {' -> '.join(path)}")
 else:
-    print("No path found from", start, "to", goal)
+    print(f"No path found from {start} to {goal}")
