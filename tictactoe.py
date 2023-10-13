@@ -65,7 +65,7 @@ class TicTacToe():
         isEmpty = None
         for row in range(3):
             for col in range(3):
-                if self.state[row][col] != 0:
+                if self.state[row][col] == 0:
                     isEmpty = True
 
         isGameOver = not isEmpty
