@@ -3,7 +3,7 @@ import math, copy
 class TicTacToe():
     def __init__(self, state=[[0, 0, 0], [0, 0, 0], [0, 0, 0]]):
         self.state = state
-        self.current_player = 1  # 'x' starts first
+        self.current_player = 1  # 'X' starts first
 
     def display_board(self):
         symbols = {1: 'X', -1: 'O', 0: ' '}
@@ -19,17 +19,11 @@ class TicTacToe():
 
     def is_valid_move(self, row, col):
         if 0 <= row < 3 and 0 <= col < 3 and self.state[row][col] == 0:
-            
             return True
-        
         return False
 
     def switch_player(self):
         self.current_player = -self.current_player
-
-    
-
-
 
     def expand_state(self):
         children = []
@@ -63,30 +57,28 @@ class TicTacToe():
                 v_min = min(v_min, v)
             return v_min
 
-
     def terminal_node(self):
         result = 0
         isGameOver = True
 
-
-        #Check for 0s
+        # Check for 0s
         isEmpty = None
         for row in range(3):
             for col in range(3):
-                if self.state[row][col] != 0: 
+                if self.state[row][col] != 0:
                     isEmpty = True
 
         isGameOver = not isEmpty
 
-        #Check rows
+        # Check rows
         for row in range(3):
             sum = 0
             for col in range(3):
-                sum +=  self.state[row][col]
-            if sum == 3: 
+                sum += self.state[row][col]
+            if sum == 3:
                 isGameOver = True
                 result = 10
-            if sum == -3: 
+            if sum == -3:
                 isGameOver = True
                 result = -10
 
@@ -99,7 +91,7 @@ class TicTacToe():
                 isGameOver = True
                 result = -10
 
-        #check for diagonal win
+        # Check for diagonal win
         if (self.state[0][0] + self.state[1][1] + self.state[2][2] == 3) or (self.state[0][2] + self.state[1][1] + self.state[2][0] == 3):
             isGameOver = True
             result = 10
@@ -107,13 +99,8 @@ class TicTacToe():
             isGameOver = True
             result = -10
 
-       
-
         return [isGameOver, result]
 
-
-
-    
     def find_best_move(self):
         best_move = None
         best_eval = -math.inf
@@ -132,50 +119,41 @@ class TicTacToe():
         return best_move
 
 
-    
-    
 def play_game():
     game = TicTacToe()
     while True:
         if game.current_player == 1:
-            print("AI is playing...")
-            best_move = game.find_best_move()
-            row, col = best_move
-        else:
-            print(f"Human is playing...")
+            print("Human is playing...")
 
-        game.display_board()  # Display the board before the player's move
-
-        if game.current_player == -1:
             while True:
+                game.display_board()  # Display the board before the player's move
                 row = int(input("Enter row (0, 1, or 2): "))
                 col = int(input("Enter column (0, 1, or 2): "))
                 if game.is_valid_move(row, col):
                     game.make_move(row, col)
+                    print("Human has played")
                     break
         else:
-            game.make_move(row, col)
+            print("AI is playing...")
+            best_move = game.find_best_move()
+            row, col = best_move
+            game.make_move(row, col)  # Update the game board with the AI's move
+            print("AI has played")
 
         game_result = game.terminal_node()
         if game_result[0]:
             if game_result[1] == 10:
-                print("AI wins!")
-            elif game_result[1] == -10:
                 print("Human wins!")
+            elif game_result[1] == -10:
+                print("AI wins!")
             else:
                 print("It's a tie!")
             break
-
-        game.display_board()  # Display the board after the player's move
 
         game.switch_player()
 
 if __name__ == "__main__":
     play_game()
-
-
-
-
 
 
 
