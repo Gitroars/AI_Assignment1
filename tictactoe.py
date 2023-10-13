@@ -123,22 +123,22 @@ def play_game():
     game = TicTacToe()
     while True:
         if game.current_player == 1:
-            print("Human is playing...")
+            print("Human (X) is playing...")
 
             while True:
                 game.display_board()  # Display the board before the player's move
-                row = int(input("Enter row (0, 1, or 2): "))
-                col = int(input("Enter column (0, 1, or 2): "))
+                row = int(input("Enter row (0/1/2): "))
+                col = int(input("Enter column (0/1/2): "))
                 if game.is_valid_move(row, col):
                     game.make_move(row, col)
-                    print("Human has played")
+                    print("Human (X) has played")
                     break
         else:
-            print("AI is playing...")
+            print("AI (O) is playing...")
             best_move = game.find_best_move()
             row, col = best_move
             game.make_move(row, col)  # Update the game board with the AI's move
-            print("AI has played")
+            print("AI (O) has played")
 
         game_result = game.terminal_node()
         if game_result[0]:
